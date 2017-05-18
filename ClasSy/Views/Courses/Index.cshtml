@@ -1,0 +1,79 @@
+﻿@model ClasSy.ViewModels.CourseViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table id="courses" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+    @foreach (var course in Model.Courses)
+         {
+             <tr id="course-@course.Id">
+                 <td>
+                     @Html.DisplayFor(modelItem => course.Name)
+                 </td>
+                 <td>
+                     @Html.ActionLink("Edit", "Edit", new {id = course.Id}) |
+                     <a role="button" data-id="@course.Id" class="js-course-delete">Delete</a>
+                 </td>
+             </tr>
+         }
+    </tbody>
+    
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            
+            $("#courses").DataTable();
+        });
+
+        $(document).on('click', '.js-course-delete', function () {
+            if (confirm("Are you sure?")) {
+                var id = $(this).data('id');
+                $.ajax({
+                    url: "api/Courses/" + id,
+                    method: "DELETE",
+                    success: function () {
+                        swal({
+                            title: "Success!",
+                            text: "You have successfully deleted the course",
+                            type: "success",
+                            confirmButtonText: "Cool"
+                        });
+
+                        $("#course-" + id).fadeOut();
+                    },
+                    error: function() {
+                        swal({
+                            title: "Error!",
+                            text: "Something went wrong, try again!",
+                            type: "error",
+                            confirmButtonText: "Ok"
+                        });
+                    }
+                });
+            }
+            
+
+        });
+    </script>
+}

@@ -1,0 +1,58 @@
+﻿@model ClasSy.ViewModels.StudentViewModel
+
+@{
+    ViewBag.Title = "Student profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Student profile</h2>
+    </div>
+    <div class="col-md-6">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="avatar">
+                    <a href="http://placehold.it/640x640" target="_blank">
+                        <img src="http://placehold.it/640x640" width="256" class="img-responsive"/>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    @Html.LabelFor(model => model.FirstName, new {@class = "profile-label col-md-6"})
+                    <span class="col-md-6">@Model.Student.FirstName</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.LastName, new {@class = "profile-label col-md-6"})
+                    <span class="col-md-6">@Model.Student.LastName</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.BirthDate, new {@class = "profile-label col-md-6"})
+                    <span class="col-md-6">@Model.Student.BirthDate.Value.ToShortDateString()</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.BirthPlace, new {@class = "profile-label col-md-6"})
+                    <span class="col-md-6">@Model.Student.BirthPlace</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.Email, new {@class = "profile-label col-md-6"})
+                    <span class="col-md-6">@Model.Student.Email</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.PhoneNumber, new {@class = "profile-label col-md-6"})
+                    <span class="col-md-6">@Model.Student.PhoneNumber</span>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-6">
+        Grades
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@model ClasSy.ViewModels.StudentViewModel
+
+@{
+    ViewBag.Title = "Students";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Students</h2>
+
+<p>
+    @Html.ActionLink("New student", "Create", "Students", null, new { @class = "btn btn-primary" })
+</p>
+
+
+<table class="table table-bordered table-hover" id="students">
+    <thead>
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Class</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var student in Model.Students)
+    {
+        <tr>
+            <td> @student.FirstName </td>
+            <td> @student.LastName </td>
+            <td> @student.Email </td>
+            <td> @student.PhoneNumber </td>
+            <td> @student.SchoolClass.Name - @student.SchoolClass.Department </td>
+            <td> @Html.ActionLink("Details", "Details", new { id = student.Id }) </td>
+        </tr>
+    }
+    
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            $("#students").DataTable();
+        });
+    </script>
+}
