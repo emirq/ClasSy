@@ -14,6 +14,7 @@ namespace ClasSy.ViewModels
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
+        [DataType(DataType.Date)]
         [Display(Name = "Birthdate")]
         public DateTime? BirthDate { get; set; }
 
