@@ -56,3 +56,9 @@
         Grades
     </div>
 </div>
+
+<div class="row mt-30">
+    <div class="col-md-12">
+        @Html.ActionLink("Assess", "Assess", "Grades", new { studentId = Model.Student.Id }, new { @class = "btn btn-success" })
+    </div>
+</div>

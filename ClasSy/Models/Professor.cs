@@ -10,6 +10,6 @@ namespace ClasSy.Models
     public class Professor : ApplicationUser
     {
         public byte ClassTeacher { get; set; }
-        public virtual IEnumerable<Course> Courses { get; set; }
+        public virtual ICollection<Course> Courses { get; set; }
     }
 }

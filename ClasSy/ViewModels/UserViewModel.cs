@@ -8,6 +8,8 @@ namespace ClasSy.ViewModels
 {
     public class UserViewModel
     {
+        public string Id { get; set; }  
+
         [Display(Name = "First name")]
         public string FirstName { get; set; }
 

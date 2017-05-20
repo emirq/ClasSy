@@ -91,9 +91,6 @@ namespace ClasSy.Controllers
                 SchoolClassId = studentViewModel.SchoolClassId
             };
 
-            _context.Students.Add(student);
-            _context.SaveChanges();
-
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
             roleHelper.CreateRoleIfDoesntExist(RoleName.Student);

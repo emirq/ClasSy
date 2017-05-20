@@ -12,6 +12,6 @@ namespace ClasSy.Models
         public byte ClassPresident { get; set; }
         public SchoolClass SchoolClass { get; set; }
         public int SchoolClassId { get; set; }
-        public virtual IEnumerable<Parent> Parents { get; set; }
+        public virtual ICollection<Parent> Parents { get; set; }
     }
 }

@@ -1,0 +1,64 @@
+﻿@model ClasSy.ViewModels.ParentViewModel
+
+@{
+    ViewBag.Title = "Parent profile";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Parent profile</h2>
+    </div>
+    <div class="col-md-6">
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="avatar">
+                    <a href="http://placehold.it/640x640" target="_blank">
+                        <img src="http://placehold.it/640x640" width="256" class="img-responsive" />
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row">
+                    @Html.LabelFor(model => model.FirstName, new { @class = "profile-label col-md-6" })
+                    <span class="col-md-6">@Model.Parent.FirstName</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.LastName, new { @class = "profile-label col-md-6" })
+                    <span class="col-md-6">@Model.Parent.LastName</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.BirthDate, new { @class = "profile-label col-md-6" })
+                    <span class="col-md-6">@Model.Parent.BirthDate</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.BirthPlace, new { @class = "profile-label col-md-6" })
+                    <span class="col-md-6">@Model.Parent.BirthPlace</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.Email, new { @class = "profile-label col-md-6" })
+                    <span class="col-md-6">@Model.Parent.Email</span>
+                </div>
+                <div class="row">
+                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "profile-label col-md-6" })
+                    <span class="col-md-6">@Model.Parent.PhoneNumber</span>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-md-5 col-md-offset-1">
+        <h4>Children:</h4>
+        <ul>
+            @foreach (var student in Model.Parent.Students)
+            {
+                <li>@Html.ActionLink(student.FullName, "Details", "Students", new { id = student.Id }, new { target = "_blank" })</li>
+            }
+        </ul>
+    </div>
+</div>

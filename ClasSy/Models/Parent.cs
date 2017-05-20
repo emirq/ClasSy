@@ -9,6 +9,6 @@ namespace ClasSy.Models
     [Table("Parents")]
     public class Parent : ApplicationUser
     {
-        public virtual IEnumerable<Student> Students { get; set; }
+        public virtual ICollection<Student> Students { get; set; }
     }
 }

@@ -1,0 +1,97 @@
+﻿@model ClasSy.ViewModels.ParentViewModel
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table table-bordered table-hover" id="parents">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LastName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var parent in Model.Parents)
+        {
+            <tr id="parent-@parent.Id">
+                <td>
+                    @Html.DisplayFor(modelItem => parent.FirstName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => parent.LastName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => parent.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => parent.PhoneNumber)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = parent.Id }) |
+                    @Html.ActionLink("Details", "Details", new { id = parent.Id }) |
+                    <a role="button" data-id="@parent.Id" class="js-parent-delete">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+
+</table>
+
+@section scripts
+{
+    <script>
+        $(function() {
+            $("#parents").DataTable();
+
+            $(document).on('click', '.js-parent-delete', function () {
+                if (confirm("Are you sure?")) {
+                    var id = $(this).data('id');
+                    $.ajax({
+                        url: "api/Parents/" + id,
+                        method: "DELETE",
+                        success: function () {
+                            swal({
+                                title: "Success!",
+                                text: "You have successfully deleted the parent",
+                                type: "success",
+                                confirmButtonText: "Cool"
+                            });
+
+                            $("#parent-" + id).fadeOut();
+                        },
+                        error: function () {
+                            swal({
+                                title: "Error!",
+                                text: "Something went wrong, try again!",
+                                type: "error",
+                                confirmButtonText: "Ok"
+                            });
+                        }
+                    });
+                }
+
+
+            });
+        });
+    </script>
+}

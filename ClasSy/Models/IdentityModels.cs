@@ -16,6 +16,7 @@ namespace ClasSy.Models
         public string Address { get; set; }
         public string BirthPlace { get; set; }
         public string Avatar { get; set; }
+        public string FullName => FirstName + " " + LastName; // compound attribute
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

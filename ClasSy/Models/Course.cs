@@ -9,6 +9,6 @@ namespace ClasSy.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public virtual IEnumerable<Professor> Professors { get; set; }
+        public virtual ICollection<Professor> Professors { get; set; }
     }
 }
