@@ -12,15 +12,18 @@ using ClasSy.Models;
 
 namespace ClasSy.Controllers
 {
+    // Credits: ASP.NET Identity
     [Authorize]
     public class AccountController : Controller
     {
+        // ASP.NET Identity attributes for user manipulation
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
         public AccountController()
         {
         }
+
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
         {

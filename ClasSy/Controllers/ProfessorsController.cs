@@ -13,10 +13,13 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ClasSy.Controllers
 {
+    // Made by: Emir Kurtanović
     public class ProfessorsController : Controller
     {
+        // entity framework database instance
         private ApplicationDbContext _context;
 
+        // Instantiating context
         public ProfessorsController()
         {
             _context = new ApplicationDbContext();
@@ -25,6 +28,7 @@ namespace ClasSy.Controllers
         // GET: Professors
         public ActionResult Index()
         {
+            // view model which is sent to the view
             var viewModel = new ProfessorViewModel()
             {
                 Professors = _context.Professors.ToList()
@@ -36,6 +40,7 @@ namespace ClasSy.Controllers
         // GET: Professors/Details/5
         public ActionResult Details(string id)
         {
+            // find professor with specified id
             var professor = _context.Professors.Include(c => c.Courses).SingleOrDefault(p => p.Id == id);
 
             if (professor == null)
@@ -57,8 +62,6 @@ namespace ClasSy.Controllers
                 Courses = _context.Courses.ToList()
             };
 
-            ViewBag.CoursesList = new MultiSelectList(_context.Courses, "Id", "Name");
-
             return View(viewModel);
         }
 
@@ -66,7 +69,7 @@ namespace ClasSy.Controllers
         [HttpPost]
         public ActionResult Create(ProfessorViewModel professorViewModel)
         {
-            // checking if validation passes, if not, refresh page
+            // checking if validation passes, if not, refresh page with validation errors displayed
             if (!ModelState.IsValid)
             {
                 var viewModel = new ProfessorViewModel()
@@ -77,6 +80,7 @@ namespace ClasSy.Controllers
                 return View(viewModel);
             }
 
+            // create new professor model prepared for database insertion
             var professor = new Professor()
             {
                 FirstName = professorViewModel.FirstName,
@@ -89,21 +93,23 @@ namespace ClasSy.Controllers
                 UserName = professorViewModel.Email,
             };
 
+            // The UserStore<T> object is injected into authentication manager which is used to identify and authenticate the UserStore<T> identity
+            // The UserManager<T> reference acts as the authenticator for the UserStore<T> identity.
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
-            roleHelper.CreateRoleIfDoesntExist(RoleName.Professor);
+            roleHelper.CreateRoleIfDoesntExist(RoleName.Professor); // RoleName is a class for defining user roles
 
-            var createUser = userManager.Create(professor, professorViewModel.Password);
+            var createUser = userManager.Create(professor, professorViewModel.Password); // password is being hashed
 
             if (createUser.Succeeded)
                 userManager.AddToRole(professor.Id, RoleName.Professor);
 
+            // insert courses which professor has selected
             foreach (var courseId in professorViewModel.SelectedCourseList)
             {
                 _context.Database.ExecuteSqlCommand("INSERT INTO ProfessorCourses(Professor_Id, Course_Id) VALUES('" + professor.Id + "', '" + courseId + "')");
             }
             
-
             return RedirectToAction("Index");
         }
 
@@ -115,6 +121,7 @@ namespace ClasSy.Controllers
             if (professor == null)
                 return HttpNotFound();
 
+            // Collection which is going to be populated in a loop with courses that professor selected previously
             ICollection<int> CourseList = new List<int>();
 
             foreach (var course in professor.Courses)
@@ -122,6 +129,7 @@ namespace ClasSy.Controllers
                 CourseList.Add(course.Id);
             }
 
+            // data to be displayed in a view
             var viewModel = new ProfessorViewModel()
             {
                 FirstName = professor.FirstName,
@@ -141,15 +149,13 @@ namespace ClasSy.Controllers
         [HttpPost]
         public ActionResult Edit(string id, ProfessorViewModel professorViewModel)
         {
-            
+            // check is validation passes, if not redirect back with validation errors
             if (!ModelState.IsValid)
             {
                 var viewModel = new ProfessorViewModel()
                 {
                     Courses = _context.Courses.ToList()
                 };
-
-                ViewBag.CoursesList = new MultiSelectList(_context.Courses, "Id", "Name");
 
                 return View(viewModel);
             }
@@ -159,7 +165,7 @@ namespace ClasSy.Controllers
             if (professor == null)
                 return HttpNotFound();
 
-
+            // professor object populated with newly created professor object
             professor.FirstName = professorViewModel.FirstName;
             professor.LastName = professorViewModel.LastName;
             professor.BirthDate = professorViewModel.BirthDate;
@@ -172,7 +178,7 @@ namespace ClasSy.Controllers
 
             professor.Courses.Clear();
 
-            _context.SaveChanges();
+            _context.SaveChanges(); // saving changes in database
 
             if (professorViewModel.SelectedCourseList != null)
             {

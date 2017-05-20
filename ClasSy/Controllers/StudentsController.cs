@@ -14,13 +14,14 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ClasSy.Controllers
 {
+    // Made by: Lejla Hodžić
     public class StudentsController : Controller
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext _context; // database instance
 
         public StudentsController()
         {
-            _context = new ApplicationDbContext();
+            _context = new ApplicationDbContext(); // creating new database instance
         }
 
         // GET: Students
@@ -35,6 +36,7 @@ namespace ClasSy.Controllers
         }
 
         // GET: Students/Details/5
+        // Showing Student profile, with all details
         public ActionResult Details(string id)
         {
             var student = _context.Students.Include(s => s.SchoolClass).SingleOrDefault(s => s.Id == id);
@@ -44,9 +46,8 @@ namespace ClasSy.Controllers
 
             var viewModel = new StudentViewModel()
             {
-                SchoolClasses = _context.SchoolClasses.ToList(),
-                Student = student,
-                Courses = _context.Courses.ToList()
+                Student = student, // student model with modified data
+                Courses = _context.Courses.ToList() // courses which student attend
             };
 
             return View(viewModel);
@@ -91,6 +92,8 @@ namespace ClasSy.Controllers
                 SchoolClassId = studentViewModel.SchoolClassId
             };
 
+            // The UserStore<T> object is injected into authentication manager which is used to identify and authenticate the UserStore<T> identity
+            // The UserManager<T> reference acts as the authenticator for the UserStore<T> identity.
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
             roleHelper.CreateRoleIfDoesntExist(RoleName.Student);
