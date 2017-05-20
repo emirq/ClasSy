@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -13,7 +12,6 @@ namespace ClasSy.Models
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        [DataType(DataType.Date)]
         public DateTime? BirthDate { get; set; }
         public string Address { get; set; }
         public string BirthPlace { get; set; }

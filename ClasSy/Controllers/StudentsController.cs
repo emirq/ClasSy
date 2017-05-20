@@ -89,18 +89,16 @@ namespace ClasSy.Controllers
                 PhoneNumber = studentViewModel.PhoneNumber,
                 UserName = studentViewModel.Email,
                 SchoolClassId = studentViewModel.SchoolClassId
-
             };
 
-            //_context.Students.Add(student);
-            //_context.SaveChanges();
+            _context.Students.Add(student);
+            _context.SaveChanges();
 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
             roleHelper.CreateRoleIfDoesntExist(RoleName.Student);
-            
+
             var createUser = userManager.Create(student, studentViewModel.Password);
-            
 
             if (createUser.Succeeded)
                 userManager.AddToRole(student.Id, RoleName.Student);
@@ -133,11 +131,11 @@ namespace ClasSy.Controllers
 
         // POST: Students/Delete/5
         [HttpPost]
-        public ActionResult Delete(string id, FormCollection collection)
+        public ActionResult Delete(int id, FormCollection collection)
         {
             try
             {
-                
+                // TODO: Add delete logic here
 
                 return RedirectToAction("Index");
             }
