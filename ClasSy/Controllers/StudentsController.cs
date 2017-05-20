@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ClasSy.Helpers;
@@ -91,8 +92,8 @@ namespace ClasSy.Controllers
                 SchoolClassId = studentViewModel.SchoolClassId
             };
 
-            _context.Students.Add(student);
-            _context.SaveChanges();
+            //_context.Students.Add(student);
+            //_context.SaveChanges();
 
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
@@ -128,21 +129,52 @@ namespace ClasSy.Controllers
                 return View();
             }
         }
-
-        // POST: Students/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        // GET: Students1/Delete/5
+        public ActionResult Delete(string id)
         {
-            try
+            if (id == null)
             {
-                // TODO: Add delete logic here
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var student = _context.Students.Find(id);
+            if (student == null)
+            {
+                return HttpNotFound();
+            }
+            var studentViewModel = new StudentViewModel
+            {
+                LastName = student.LastName,
+                FirstName = student.FirstName,
+                BirthDate = student.BirthDate,
+                Address = student.Address,
+                BirthPlace = student.BirthPlace,
+                ClassPresident = student.ClassPresident,
+                Email = student.Email,
+                SchoolClass = student.SchoolClass,
+                PhoneNumber = student.PhoneNumber,
+                Password = student.PasswordHash,
+                SchoolClassId = student.SchoolClassId
 
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            };
+            return View(studentViewModel);
+        }
+        // POST: Students/Delete/5
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(string id)
+        {
+
+            var student = _context.Students.Find(id);
+            var grades = _context.Grades.Where(g => g.StudentId == student.Id);
+            var courses = _context.Courses.Where(c => c.Id == grades.FirstOrDefault().CourseId);
+            _context.Courses.RemoveRange(courses);
+            _context.Grades.RemoveRange(grades);
+            _context.Students.Remove(student);
+            
+            
+            _context.SaveChanges();
+            return RedirectToAction("Index");
+
         }
     }
 }

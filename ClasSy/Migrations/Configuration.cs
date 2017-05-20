@@ -78,13 +78,54 @@ namespace ClasSy.Migrations
                 UserName = "emir.kurtanovic@gmail.com",
                 PasswordHash = passwordHasher.HashPassword("P@ssw0rd"),
                 SecurityStamp = "dcvfgdve",
-                Parents = new List<Parent>() { parent }
+                Parents = new List<Parent>() { parent },
 
+            };
+            var mathematics = new Course
+            {
+                Name = "Mathematics",
+                Professors = new List<Professor> { professor}
+            };
+            var english = new Course
+            {
+                Name = "English",
+                Professors = new List<Professor> { professor}
+            };
+            var art = new Course
+            {
+                Name = "Art",
+                Professors = new List<Professor> { professor}
+            };
+
+            var grade = new Grade
+            {
+                Value = 5,
+                Student = student,
+                Course = mathematics,
+                Semester = 2
+            };
+
+            var grade2 = new Grade
+            {
+                Value = 4,
+                Student = student,
+                Course = english,
+                Semester = 2
+            };
+            var grade3 = new Grade
+            {
+                Value = 5,
+                Student = student,
+                Course = art,
+                Semester = 2
             };
             context.Users.AddOrUpdate(professor);
             context.SchoolClasses.AddOrUpdate(schoolClass);
             context.Users.AddOrUpdate(parent);
             context.Users.AddOrUpdate(student);
+            context.Grades.AddOrUpdate(grade);
+            context.Grades.AddOrUpdate(grade2);
+            context.Grades.AddOrUpdate(grade3);
             context.SaveChanges();
 
             var userStore = new UserStore<Professor>(context);

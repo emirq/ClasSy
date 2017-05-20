@@ -549,10 +549,13 @@
     <Content Include="Views\Courses\Index.cshtml" />
     <Content Include="Views\Courses\Create.cshtml" />
     <Content Include="Views\Courses\Edit.cshtml" />
+    <Content Include="Views\Students\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Dtos\" />
+    <Folder Include="Views\Default\" />
+    <Folder Include="Views\Students1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
