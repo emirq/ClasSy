@@ -8,6 +8,8 @@ namespace ClasSy.Controllers
 {
     public class HomeController : Controller
     {
+        // Showing the project homepage
+        // Made by: Lejla Hodžić
         public ActionResult Index()
         {
             return View();

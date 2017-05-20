@@ -5,6 +5,7 @@ using System.Web;
 
 namespace ClasSy.Models
 {
+    // Author: Muhammed Yasin Yildirim
     public class RoleName
     {
         public const string Admin = "Admin";

@@ -6,6 +6,7 @@ using System.Web;
 
 namespace ClasSy.Models
 {
+    // Author: Lejla Hodžić
     [Table("Students")]
     public class Student : ApplicationUser
     {

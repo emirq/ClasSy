@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
+// Credits: ASP.NET Identity Framework
 namespace ClasSy.Models
 {
     public class ExternalLoginConfirmationViewModel

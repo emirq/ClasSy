@@ -98,6 +98,7 @@ namespace ClasSy.Controllers
             var roleHelper = new RoleHelper(_context);
             roleHelper.CreateRoleIfDoesntExist(RoleName.Student);
 
+            // inserting student
             var createUser = userManager.Create(student, studentViewModel.Password);
 
             if (createUser.Succeeded)

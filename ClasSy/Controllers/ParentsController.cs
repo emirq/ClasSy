@@ -12,18 +12,20 @@ using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ClasSy.Controllers
 {
+    // Made by: Muhammed Yasin Yildirim
     public class ParentsController : Controller
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext _context; // instantiable application db context
 
         public ParentsController()
         {
-            _context = new ApplicationDbContext();
+            _context = new ApplicationDbContext(); // instantiating
         }
 
         // GET: Parents
         public ActionResult Index()
         {
+            // view model which consists of parents and students list, every parent has one or many children
             var viewModel = new ParentViewModel()
             {
                 Parents = _context.Parents.ToList(),
@@ -50,6 +52,7 @@ namespace ClasSy.Controllers
         }
 
         // GET: Parents/Create
+        // Loading create view
         public ActionResult Create()
         {
             var viewModel = new ParentViewModel()
@@ -61,9 +64,11 @@ namespace ClasSy.Controllers
         }
 
         // POST: Parents/Create
+        // posting request to create parent user
         [HttpPost]
         public ActionResult Create(ParentViewModel parentViewModel)
         {
+            // refreshes the page if validation is not passed, and sends the validation errors back
             if (!ModelState.IsValid)
             {
                 var viewModel = new ParentViewModel()
@@ -74,6 +79,7 @@ namespace ClasSy.Controllers
                 return View(viewModel);
             }
 
+            // preparing parent model for creating parent user
             var parent = new Parent()
             {
                 FirstName = parentViewModel.FirstName,
@@ -86,6 +92,8 @@ namespace ClasSy.Controllers
                 UserName = parentViewModel.Email,
             };
 
+            // The UserStore<T> object is injected into authentication manager which is used to identify and authenticate the UserStore<T> identity
+            // The UserManager<T> reference acts as the authenticator for the UserStore<T> identity.
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
             roleHelper.CreateRoleIfDoesntExist(RoleName.Parent);
@@ -95,6 +103,7 @@ namespace ClasSy.Controllers
             if (createUser.Succeeded)
                 userManager.AddToRole(parent.Id, RoleName.Parent);
 
+            // handling parent's children (students)
             foreach (var studentId in parentViewModel.SelectedStudentList)
             {
                 _context.Database.ExecuteSqlCommand("INSERT INTO ParentStudents(Parent_Id, Student_Id) VALUES('" + parent.Id + "', '" + studentId + "')");
@@ -112,11 +121,12 @@ namespace ClasSy.Controllers
             if (parent == null)
                 return HttpNotFound();
 
+            // preparing students which parent belongs to
             ICollection<string> studentsList = new List<string>();
 
             foreach (var student in parent.Students)
             {
-                studentsList.Add(student.Id);
+                studentsList.Add(student.Id); // populating the list
             }
 
             var viewModel = new ParentViewModel()
@@ -137,6 +147,7 @@ namespace ClasSy.Controllers
         [HttpPost]
         public ActionResult Edit(string id, ParentViewModel parentViewModel)
         {
+            // refreshes the page if validation is not passed, and sends the validation errors back
             if (!ModelState.IsValid)
             {
                 var viewModel = new ParentViewModel()
@@ -152,7 +163,7 @@ namespace ClasSy.Controllers
             if (parent == null)
                 return HttpNotFound();
 
-
+            // exchanging the old data with the new ones
             parent.FirstName = parentViewModel.FirstName;
             parent.LastName = parentViewModel.LastName;
             parent.BirthDate = parentViewModel.BirthDate;
@@ -162,14 +173,13 @@ namespace ClasSy.Controllers
             parent.PhoneNumber = parentViewModel.PhoneNumber;
             parent.UserName = parentViewModel.Email;
             
-
-
-            parent.Students.Clear();
+            parent.Students.Clear(); // removing all students from parent object
 
             _context.SaveChanges();
 
             if (parentViewModel.SelectedStudentList != null)
             {
+                // populating new students
                 foreach (var studentId in parentViewModel.SelectedStudentList)
                 {
                     _context.Database.ExecuteSqlCommand("INSERT INTO ParentStudents(Parent_Id, Student_Id) VALUES('" + parent.Id + "', '" + studentId + "')");

@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNet.Identity;
 using Microsoft.Owin.Security;
 
+// Credits: ASP.NET Identity Framework
 namespace ClasSy.Models
 {
     public class IndexViewModel

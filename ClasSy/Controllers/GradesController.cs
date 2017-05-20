@@ -21,6 +21,7 @@ namespace ClasSy.Controllers
         }
 
         // GET: Grades
+        // Made by: Muhammed Yasin Yildirim
         public ActionResult Index()
         {
             return View();
@@ -35,37 +36,30 @@ namespace ClasSy.Controllers
         // GET: Grades/Create
         public ActionResult Create()
         {
-            string userId = User.Identity.GetUserId<string>();
-            var professor = _context.Professors.FirstOrDefault(p => p.Id == userId);
-
-            if (professor == null)
-                return HttpNotFound();
-            
-            var viewModel = new GradeViewModel()
-            {
-                ProfessorCourses = professor.Courses.ToList()
-            };
-
-            return View(viewModel);
+            return View();
         }
 
         // POST: Grades/Create
         [HttpPost]
         public ActionResult Create(GradeViewModel gradeViewModel)
         {
-            
-
             return View();
         }
 
+        // GET: Assess the student
+        // Made by: Muhammed Yasin Yildirim
         public ActionResult Assess()
         {
+            // Getting the authenticated user id
             string userId = User.Identity.GetUserId<string>();
+
+            // Professors which assesses the student
             var professor = _context.Professors.FirstOrDefault(p => p.Id == userId);
 
             if (professor == null)
                 return HttpNotFound();
 
+            // send data to view, in this case, professor courses
             var viewModel = new GradeViewModel()
             {
                 ProfessorCourses = professor.Courses.ToList()
@@ -75,13 +69,14 @@ namespace ClasSy.Controllers
         }
 
         [HttpPost]
+        // POST: /Grades/Assess/1
+        // Made by: Lejla Hodžić
         public ActionResult Assess(string studentId, GradeViewModel gradeViewModel)
         {
-            string userId = User.Identity.GetUserId<string>();
+            string userId = User.Identity.GetUserId<string>(); // getting authenticated user (professor id)
             if (!ModelState.IsValid)
             {
-
-                var professor = _context.Professors.FirstOrDefault(p => p.Id == userId);
+                var professor = _context.Professors.FirstOrDefault(p => p.Id == userId); // professor which assesses the student
 
                 if (professor == null)
                     return HttpNotFound();
@@ -94,12 +89,13 @@ namespace ClasSy.Controllers
                 return View(viewModel);
             }
 
+            // Inserting grade with the details like specified
             var grade = new Grade()
             {
-                Value = gradeViewModel.Value,
+                Value = gradeViewModel.Value, // grade value
                 CourseId = gradeViewModel.CourseId,
-                ProfessorId = userId,
-                StudentId = studentId
+                ProfessorId = userId, // professor which is assessing
+                StudentId = studentId // student which is assessed
             };
 
             _context.Grades.Add(grade);

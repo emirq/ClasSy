@@ -8,9 +8,10 @@ using ClasSy.ViewModels;
 
 namespace ClasSy.Controllers
 {
+
     public class CoursesController : Controller
     {
-        private ApplicationDbContext _context;
+        private ApplicationDbContext _context; // instance of db
 
         public CoursesController()
         {
@@ -18,6 +19,7 @@ namespace ClasSy.Controllers
         }
 
         // GET: Courses
+        // Author: Muhammed Yasin Yildirim
         public ActionResult Index()
         {
             var courses = _context.Courses.ToList();
@@ -28,12 +30,14 @@ namespace ClasSy.Controllers
         }
 
         // GET: Create course
+        // Author: Muhammed Yasin Yildirim
         public ActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
+        // Made by: Lejla Hodžić
         public ActionResult Create(Course course)
         {
             if (!ModelState.IsValid)
@@ -48,6 +52,7 @@ namespace ClasSy.Controllers
         }
 
         // GET: Courses/Edit/1
+        // Made by: Emir Kurtanović
         public ActionResult Edit(int id)
         {
             var course = _context.Courses.SingleOrDefault(c => c.Id == id);
@@ -62,6 +67,7 @@ namespace ClasSy.Controllers
 
         // POST: Courses/Edit/1
         [HttpPost]
+        // Made by: Emir Kurtanović
         public ActionResult Edit(int id, CourseViewModel courseViewModel)
         {
             var course = _context.Courses.SingleOrDefault(c => c.Id == id);
@@ -83,6 +89,7 @@ namespace ClasSy.Controllers
 
         // POST: Courses/Delete/5
         [HttpPost]
+        // Made by: Lejla Hodžić
         public ActionResult Delete(int id, CourseViewModel courseViewModel)
         {
             var course = _context.Courses.SingleOrDefault(c => c.Id == id);
