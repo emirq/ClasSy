@@ -1,5 +1,5 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 110px;
     padding-bottom: 20px;
 }
 
@@ -33,4 +33,15 @@ textarea {
     margin-top: 30px;
 }
 
+.dashboard-card {
+    display: block;
+    text-align: center;
+    font-size: 18px;
+    text-transform: uppercase;
+}
+
+.dashboard-card:hover {
+    text-decoration: none;
+    opacity: 0.8;
+}
 /* STUDENT PROFILE */

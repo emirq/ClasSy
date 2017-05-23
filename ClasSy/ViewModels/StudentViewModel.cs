@@ -19,10 +19,12 @@ namespace ClasSy.ViewModels
 
         public SchoolClass SchoolClass { get; set; }
 
-        public IEnumerable<SchoolClass> SchoolClasses { get; set; }
+        public virtual IEnumerable<SchoolClass> SchoolClasses { get; set; }
 
         public IEnumerable<Student> Students { get; set; }
 
-        public IEnumerable<Course> Courses { get; set; }    
+        public IEnumerable<Course> Courses { get; set; }
+
+        public IEnumerable<Grade> Grades { get; set; }
     }
 }

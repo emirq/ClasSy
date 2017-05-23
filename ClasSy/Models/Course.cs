@@ -13,5 +13,7 @@ namespace ClasSy.Models
 
         // property which creates resource relationship
         public virtual ICollection<Professor> Professors { get; set; }
+        public IEnumerable<Grade> Grades { get; set; }
+        public ICollection<Student> Students { get; set; }
     }
 }

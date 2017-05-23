@@ -1,0 +1,72 @@
+﻿@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "ProfessorDashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="panel panel-default">
+    <div class="panel-heading">
+        Dashboard
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">
+                <a href="/Professors/Details/@User.Identity.GetUserId()" class="dashboard-card">
+                    <div class="alert alert-success">
+                        <div>
+                            <i class="fa fa-fw fa-user fa-5x"></i>
+                        </div>
+
+                        My profile
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/Professors" class="dashboard-card">
+                    <div class="alert alert-success">
+                        <div>
+                            <i class="fa fa-fw fa-users fa-5x"></i>
+                        </div>
+
+                        Professors
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/Parents" class="dashboard-card">
+                    <div class="alert alert-success">
+                        <div>
+                            <i class="fa fa-fw fa-users fa-5x"></i>
+                        </div>
+
+                        Parents
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/Students" class="dashboard-card">
+                    <div class="alert alert-success">
+                        <div>
+                            <i class="fa fa-fw fa-vcard fa-5x"></i>
+                        </div>
+
+                        Students
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4">
+                <a href="/Professors/Edit/@User.Identity.GetUserId()" class="dashboard-card">
+                    <div class="alert alert-success">
+                        <div>
+                            <i class="fa fa-fw fa-cog fa-5x"></i>
+                        </div>
+
+                        Settings
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+

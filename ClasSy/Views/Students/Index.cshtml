@@ -1,4 +1,5 @@
-﻿@model ClasSy.ViewModels.StudentViewModel
+﻿@using ClasSy.Models
+@model ClasSy.ViewModels.StudentViewModel
 
 @{
     ViewBag.Title = "Students";
@@ -7,9 +8,13 @@
 
 <h2>Students</h2>
 
-<p>
-    @Html.ActionLink("New student", "Create", "Students", null, new { @class = "btn btn-primary" })
-</p>
+@if (User.IsInRole(RoleName.Admin))
+{
+    <p>
+        @Html.ActionLink("New student", "Create", "Students", null, new { @class = "btn btn-primary" })
+    </p>
+}
+
 
 
 <table class="table table-bordered table-hover" id="students">

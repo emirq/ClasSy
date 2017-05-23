@@ -29,7 +29,8 @@ namespace ClasSy
                       "~/Content/bootstrap-paper.css",
                       "~/Content/site.css",
                       "~/Content/DataTables/css/datatables.bootstrap.css",
-                      "~/Content/sweetalert.css"));
+                      "~/Content/sweetalert.css",
+                      "~/Content/font-awesome.min.css"));
         }
     }
 }

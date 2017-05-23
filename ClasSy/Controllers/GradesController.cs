@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace ClasSy.Controllers
 {
+    [Authorize(Roles = RoleName.Professor)]
     public class GradesController : Controller
     {
         private ApplicationDbContext _context;

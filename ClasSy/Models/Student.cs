@@ -11,8 +11,11 @@ namespace ClasSy.Models
     public class Student : ApplicationUser
     {
         public byte ClassPresident { get; set; }
-        public SchoolClass SchoolClass { get; set; }
+        public virtual SchoolClass SchoolClass { get; set; }
         public int SchoolClassId { get; set; }
         public virtual ICollection<Parent> Parents { get; set; }
+
+        public ICollection<Course> Courses { get; set; }
+        public ICollection<Grade> Grades { get; set; }
     }
 }

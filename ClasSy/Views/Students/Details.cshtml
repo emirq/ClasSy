@@ -1,4 +1,5 @@
-﻿@model ClasSy.ViewModels.StudentViewModel
+﻿@using ClasSy.Models
+@model ClasSy.ViewModels.StudentViewModel
 
 @{
     ViewBag.Title = "Student profile";
@@ -8,57 +9,88 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <h2>Student profile</h2>
-    </div>
     <div class="col-md-6">
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="avatar">
-                    <a href="http://placehold.it/640x640" target="_blank">
-                        <img src="http://placehold.it/640x640" width="256" class="img-responsive"/>
-                    </a>
-                </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Student profile
             </div>
-            <div class="col-md-6">
+            <div class="panel-body">
                 <div class="row">
-                    @Html.LabelFor(model => model.FirstName, new {@class = "profile-label col-md-6"})
-                    <span class="col-md-6">@Model.Student.FirstName</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.LastName, new {@class = "profile-label col-md-6"})
-                    <span class="col-md-6">@Model.Student.LastName</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.BirthDate, new {@class = "profile-label col-md-6"})
-                    <span class="col-md-6">@Model.Student.BirthDate.Value.ToShortDateString()</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.BirthPlace, new {@class = "profile-label col-md-6"})
-                    <span class="col-md-6">@Model.Student.BirthPlace</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.Email, new {@class = "profile-label col-md-6"})
-                    <span class="col-md-6">@Model.Student.Email</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.PhoneNumber, new {@class = "profile-label col-md-6"})
-                    <span class="col-md-6">@Model.Student.PhoneNumber</span>
-                </div>
+                    <div class="col-md-4">
+                        <div class="avatar">
+                            <a href="../../Content/images/student.ico" target="_blank">
+                                <img src="../../Content/images/student.ico" width="256" class="img-responsive" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <div class="row">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Student.FirstName</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.LastName, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Student.LastName</span>
+                        </div>
+                        @*<div class="row">
+        @Html.LabelFor(model => model.BirthDate, new { @class = "profile-label col-md-6" })
+        <span class="col-md-6">@Model.Student.BirthDate.Value.ToShortDateString()</span>
+    </div>*@
+                        <div class="row">
+                            @Html.LabelFor(model => model.BirthPlace, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Student.BirthPlace</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.Email, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Student.Email</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.PhoneNumber, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Student.PhoneNumber</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.SchoolClass, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@(Model.Student.SchoolClass.Name + " " + Model.Student.SchoolClass.Department)</span>
+                        </div>
 
+                    </div>
+                </div>
             </div>
         </div>
+        
 
 
     </div>
     <div class="col-md-6">
-        Grades
-    </div>
-</div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Grades
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
 
-<div class="row mt-30">
-    <div class="col-md-12">
-        @Html.ActionLink("Assess", "Assess", "Grades", new { studentId = Model.Student.Id }, new { @class = "btn btn-success" })
+                    @foreach (var course in Model.Courses)
+                    {
+                        <li>
+                            <label class="profile-label">@course.Name:</label>
+                            @foreach (var grade in Model.Grades)
+                            {
+                                if (grade.CourseId == course.Id)
+                                {
+                                    @(grade.Value + ", ")
+                                }
+
+                            }
+                        </li>
+                    }
+
+                </ul>
+                @if (User.IsInRole(RoleName.Professor))
+                {
+                    @Html.ActionLink("Assess the Student", "Assess", "Grades", new { studentId = Model.Student.Id }, new { @class = "btn btn-success pull-right" })
+                }
+            </div>
+        </div>
+        
     </div>
 </div>

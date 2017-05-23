@@ -9,6 +9,7 @@ using ClasSy.ViewModels;
 namespace ClasSy.Controllers
 {
 
+    [Authorize(Roles = RoleName.Admin)]
     public class CoursesController : Controller
     {
         private ApplicationDbContext _context; // instance of db

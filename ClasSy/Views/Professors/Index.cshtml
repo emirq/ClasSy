@@ -1,4 +1,5 @@
-﻿@model ClasSy.ViewModels.ProfessorViewModel
+﻿@using ClasSy.Models
+@model ClasSy.ViewModels.ProfessorViewModel
 
 @{
     ViewBag.Title = "Index";
@@ -28,7 +29,7 @@
             <th>
                 @Html.DisplayNameFor(model => model.PhoneNumber)
             </th>
-            <th></th>
+            <th>Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -51,9 +52,14 @@
                     @Html.DisplayFor(modelItem => professor.PhoneNumber)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = professor.Id }) |
-                    @Html.ActionLink("Details", "Details", new { id = professor.Id }) |
-                    <a role="button" data-id="@professor.Id" class="js-professor-delete">Delete</a>
+                    @if (User.IsInRole(RoleName.Admin))
+                    {
+                        @Html.ActionLink("Edit", "Edit", new { id = professor.Id }) 
+                        <a role="button" data-id="@professor.Id" class="js-professor-delete">Delete</a> 
+                    }
+
+                    @Html.ActionLink("Details", "Details", new { id = professor.Id })
+
                 </td>
             </tr>
         }

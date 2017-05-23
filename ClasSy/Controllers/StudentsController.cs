@@ -39,21 +39,25 @@ namespace ClasSy.Controllers
         // Showing Student profile, with all details
         public ActionResult Details(string id)
         {
-            var student = _context.Students.Include(s => s.SchoolClass).SingleOrDefault(s => s.Id == id);
+            var student = _context.Students.Include(g => g.Grades).SingleOrDefault(s => s.Id == id);
+            
 
             if (student == null)
                 return HttpNotFound();
 
+
             var viewModel = new StudentViewModel()
             {
                 Student = student, // student model with modified data
-                Courses = _context.Courses.ToList() // courses which student attend
+                Grades = student.Grades,
+                Courses = _context.Courses
             };
 
             return View(viewModel);
         }
 
         // GET: Students/Create
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create()
         {
             var viewModel = new StudentViewModel()
@@ -66,6 +70,7 @@ namespace ClasSy.Controllers
 
         // POST: Students/Create
         [HttpPost]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create(StudentViewModel studentViewModel)
         {
             // checking if validation passes, if not, refresh page

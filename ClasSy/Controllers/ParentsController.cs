@@ -53,6 +53,7 @@ namespace ClasSy.Controllers
 
         // GET: Parents/Create
         // Loading create view
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create()
         {
             var viewModel = new ParentViewModel()
@@ -66,6 +67,7 @@ namespace ClasSy.Controllers
         // POST: Parents/Create
         // posting request to create parent user
         [HttpPost]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create(ParentViewModel parentViewModel)
         {
             // refreshes the page if validation is not passed, and sends the validation errors back

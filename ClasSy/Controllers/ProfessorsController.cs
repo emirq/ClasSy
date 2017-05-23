@@ -55,6 +55,7 @@ namespace ClasSy.Controllers
         }
 
         // GET: Professors/Create
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create()
         {
             var viewModel = new ProfessorViewModel()
@@ -67,6 +68,7 @@ namespace ClasSy.Controllers
 
         // POST: Professors/Create
         [HttpPost]
+        [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create(ProfessorViewModel professorViewModel)
         {
             // checking if validation passes, if not, refresh page with validation errors displayed

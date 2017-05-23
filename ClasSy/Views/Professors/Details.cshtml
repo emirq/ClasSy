@@ -8,57 +8,64 @@
 
 
 <div class="row">
-    <div class="col-md-12">
-        <h2>Professor profile</h2>
-    </div>
     <div class="col-md-6">
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="avatar">
-                    <a href="http://placehold.it/640x640" target="_blank">
-                        <img src="http://placehold.it/640x640" width="256" class="img-responsive" />
-                    </a>
-                </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Professor profile
             </div>
-            <div class="col-md-6">
+            <div class="panel-body">
                 <div class="row">
-                    @Html.LabelFor(model => model.FirstName, new { @class = "profile-label col-md-6" })
-                    <span class="col-md-6">@Model.Professor.FirstName</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.LastName, new { @class = "profile-label col-md-6" })
-                    <span class="col-md-6">@Model.Professor.LastName</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.BirthDate, new { @class = "profile-label col-md-6" })
-                    <span class="col-md-6">@Model.Professor.BirthDate</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.BirthPlace, new { @class = "profile-label col-md-6" })
-                    <span class="col-md-6">@Model.Professor.BirthPlace</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.Email, new { @class = "profile-label col-md-6" })
-                    <span class="col-md-6">@Model.Professor.Email</span>
-                </div>
-                <div class="row">
-                    @Html.LabelFor(model => model.PhoneNumber, new { @class = "profile-label col-md-6" })
-                    <span class="col-md-6">@Model.Professor.PhoneNumber</span>
-                </div>
+                    <div class="col-md-6">
+                        <div class="avatar">
+                            <a href="../../Content/images/professor.png" target="_blank">
+                                <img src="../../Content/images/professor.png" width="256" class="img-responsive" />
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            @Html.LabelFor(model => model.FirstName, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Professor.FirstName</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.LastName, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Professor.LastName</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.BirthDate, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Professor.BirthDate</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.BirthPlace, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Professor.BirthPlace</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.Email, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Professor.Email</span>
+                        </div>
+                        <div class="row">
+                            @Html.LabelFor(model => model.PhoneNumber, new { @class = "profile-label col-md-6" })
+                            <span class="col-md-6">@Model.Professor.PhoneNumber</span>
+                        </div>
 
+                    </div>
+                </div>
             </div>
         </div>
-
-
     </div>
-    <div class="col-md-5 col-md-offset-1">
-        <h4>Professor teaches:</h4>
-        <ul>
-            @foreach (var course in Model.Professor.Courses)
-            {
-                <li>@course.Name</li>
-            }
-        </ul>
+    <div class="col-md-6">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Professor teaches
+            </div>
+            <div class="panel-body">
+                <ul class="list-unstyled">
+                    @foreach (var course in Model.Professor.Courses)
+                    {
+                        <li>@course.Name</li>
+                    }
+                </ul>
+            </div>
+        </div>
     </div>
 </div>

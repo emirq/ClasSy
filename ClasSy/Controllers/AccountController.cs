@@ -5,6 +5,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using ClasSy.Helpers;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -156,6 +157,13 @@ namespace ClasSy.Controllers
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
+
+                var roleHelper = new RoleHelper(new ApplicationDbContext());
+                roleHelper.CreateRoleIfDoesntExist(RoleName.Admin); // RoleName is a class for defining user roles
+
+                if (result.Succeeded)
+                    UserManager.AddToRole(user.Id, RoleName.Admin);
+
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
