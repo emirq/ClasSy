@@ -14,5 +14,6 @@ namespace ClasSy.Models
         public string Name { get; set; }
         public Professor Professor { get; set; }
         public string ProfessorId { get; set; }
+        public string NameDepartment => Name + " " + Department; // compound attribute
     }
 }
