@@ -159,7 +159,7 @@ namespace ClasSy.Controllers
                 var result = await UserManager.CreateAsync(user, model.Password);
 
                 var roleHelper = new RoleHelper(new ApplicationDbContext());
-                roleHelper.CreateRoleIfDoesntExist(RoleName.Admin); // RoleName is a class for defining user roles
+                roleHelper.CreateRoleIfDoesntExist(RoleName.Admin);
 
                 if (result.Succeeded)
                     UserManager.AddToRole(user.Id, RoleName.Admin);

@@ -18,8 +18,7 @@ namespace ClasSy.Controllers
         {
             _context = new ApplicationDbContext();
         }
-
-        // Showing the project homepage
+        
         // Made by: Lejla Hodžić
         public ActionResult Index()
         {

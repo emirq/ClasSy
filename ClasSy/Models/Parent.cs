@@ -10,7 +10,6 @@ namespace ClasSy.Models
     [Table("Parents")]
     public class Parent : ApplicationUser
     {
-        // property which creates resource relationship
         public virtual ICollection<Student> Students { get; set; }
     }
 }

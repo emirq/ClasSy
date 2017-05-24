@@ -51,16 +51,13 @@ namespace ClasSy.Controllers
         // Made by: Muhammed Yasin Yildirim
         public ActionResult Assess()
         {
-            // Getting the authenticated user id
             string userId = User.Identity.GetUserId<string>();
-
-            // Professors which assesses the student
+            
             var professor = _context.Professors.FirstOrDefault(p => p.Id == userId);
 
             if (professor == null)
                 return HttpNotFound();
-
-            // send data to view, in this case, professor courses
+            
             var viewModel = new GradeViewModel()
             {
                 ProfessorCourses = professor.Courses.ToList()
@@ -74,10 +71,10 @@ namespace ClasSy.Controllers
         // Made by: Lejla Hodžić
         public ActionResult Assess(string studentId, GradeViewModel gradeViewModel)
         {
-            string userId = User.Identity.GetUserId<string>(); // getting authenticated user (professor id)
+            string userId = User.Identity.GetUserId<string>();
             if (!ModelState.IsValid)
             {
-                var professor = _context.Professors.FirstOrDefault(p => p.Id == userId); // professor which assesses the student
+                var professor = _context.Professors.FirstOrDefault(p => p.Id == userId);
 
                 if (professor == null)
                     return HttpNotFound();
@@ -89,14 +86,13 @@ namespace ClasSy.Controllers
 
                 return View(viewModel);
             }
-
-            // Inserting grade with the details like specified
+            
             var grade = new Grade()
             {
-                Value = gradeViewModel.Value, // grade value
+                Value = gradeViewModel.Value,
                 CourseId = gradeViewModel.CourseId,
-                ProfessorId = userId, // professor which is assessing
-                StudentId = studentId // student which is assessed
+                ProfessorId = userId,
+                StudentId = studentId
             };
 
             _context.Grades.Add(grade);

@@ -18,8 +18,6 @@ namespace ClasSy.Controllers.Api
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: api/Courses
-        // Similar method to IEnumerable - represents a queryable data source,
-        // IQueryable<T> allows you to execute a query against a specific data source wherein type of data is not specified.
         public IQueryable<Course> GetCourses()
         {
             return db.Courses;
@@ -27,7 +25,6 @@ namespace ClasSy.Controllers.Api
 
         // GET: api/Courses/5
         [ResponseType(typeof(Course))]
-        // IHttpActionResult allows us to get important report types as (ok, 200, 201, 400, 500...)
         public IHttpActionResult GetCourse(int id)
         {
             Course course = db.Courses.Find(id);

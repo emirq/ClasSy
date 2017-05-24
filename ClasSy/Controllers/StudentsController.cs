@@ -17,11 +17,11 @@ namespace ClasSy.Controllers
     // Made by: Lejla Hodžić
     public class StudentsController : Controller
     {
-        private ApplicationDbContext _context; // database instance
+        private ApplicationDbContext _context;
 
         public StudentsController()
         {
-            _context = new ApplicationDbContext(); // creating new database instance
+            _context = new ApplicationDbContext();
         }
 
         // GET: Students
@@ -36,7 +36,6 @@ namespace ClasSy.Controllers
         }
 
         // GET: Students/Details/5
-        // Showing Student profile, with all details
         public ActionResult Details(string id)
         {
             var student = _context.Students.Include(g => g.Grades).SingleOrDefault(s => s.Id == id);
@@ -48,7 +47,7 @@ namespace ClasSy.Controllers
 
             var viewModel = new StudentViewModel()
             {
-                Student = student, // student model with modified data
+                Student = student,
                 Grades = student.Grades,
                 Courses = _context.Courses
             };
@@ -73,7 +72,6 @@ namespace ClasSy.Controllers
         [Authorize(Roles = RoleName.Admin)]
         public ActionResult Create(StudentViewModel studentViewModel)
         {
-            // checking if validation passes, if not, refresh page
             if (!ModelState.IsValid)
             {
                 var viewModel = new StudentViewModel()
@@ -96,14 +94,11 @@ namespace ClasSy.Controllers
                 UserName = studentViewModel.Email,
                 SchoolClassId = studentViewModel.SchoolClassId
             };
-
-            // The UserStore<T> object is injected into authentication manager which is used to identify and authenticate the UserStore<T> identity
-            // The UserManager<T> reference acts as the authenticator for the UserStore<T> identity.
+            
             var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
             var roleHelper = new RoleHelper(_context);
             roleHelper.CreateRoleIfDoesntExist(RoleName.Student);
-
-            // inserting student
+            
             var createUser = userManager.Create(student, studentViewModel.Password);
 
             if (createUser.Succeeded)

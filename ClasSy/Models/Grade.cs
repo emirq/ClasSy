@@ -12,16 +12,13 @@ namespace ClasSy.Models
         public int Id { get; set; }
         public byte Value { get; set; }
         public byte Semester { get; set; }
-
-        // property which creates resource relationship
+        
         public Student Student { get; set; }
         public string StudentId { get; set; }
-
-        // property which creates resource relationship
+        
         public Course Course { get; set; }
         public int CourseId { get; set; }
-
-        // property which creates resource relationship
+        
         public Professor Professor { get; set; }
         public string ProfessorId { get; set; }
     }
